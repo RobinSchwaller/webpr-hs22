@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Function Tests</title>
+</head>
+<body>
+    <script>
+
+        const print = a => document.writeln(a.toString());
+
+        const Observable = value => {
+            const listeners = [];
+            return {
+                onChange: callback => {
+                    listeners.push(callback);
+                    callback(value, value);
+                },
+                getValue: ()       => value,
+                setValue: newValue => {
+                    if (value === newValue) return;
+                    const oldValue = value;
+                    value = newValue;
+                    listeners.forEach(callback => callback(value, oldValue));
+                }
+            }
+        };
+
+        let sum = 0;
+        const trackable = Observable(0);
+
+        trackable.onChange(value => sum += value);
+
+        trackable.setValue(2); // values x_, y_, z_ are given. Do not override.
+        trackable.setValue(3);
+        trackable.setValue(4);
+
+        print(trackable.getValue() === 4);
+        print(sum === 2 + 3 + 4);
+        print(sum);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
