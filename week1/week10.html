@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Function Tests</title>
+</head>
+<body>
+    <script>
+
+        const print = a => document.writeln(a.toString());
+
+
+        /*const NullSafe = x => {
+            const isNullSafe = y => y && y.then;
+            const maywrap    = y => ___ ; // if y is not NullSafe yet, make it so
+            return {
+                then: fn => ___ // see(1)
+            }
+        };*/
+
+        const NullSafe = x => {
+            const isNullSafe = y => y && y.then;
+            const maywrap    = y => isNullSafe(y) ? y : NullSafe(y); // if y is not NullSafe yet, make it so
+            return {
+                then: fn => !!x ? maywrap(fn(x)): maywrap(null) // see(1)
+            }
+        };
+
+        // NullSafe(1).then(console.log);                   // will call the log
+        // NullSafe(null).then(console.log);                // will not call the log
+        // NullSafe(2).then( x => null).then(console.log);  // will not call the log
+
+
+        const x_ = 2;
+        let y_ = 2;
+
+        print(NullSafe(x_)
+            .then( x => x*2)          // must auto-promote
+            .then( x => NullSafe(x))  // must not auto-promote
+            .then( x => y_ = x + 1)   // store value, check no double promotion
+            .then( x => null)         // jump over rest
+            .then( x => x.mustNotBeCalled) !== null && y_ === x_ * 2 + 1)
+
+        /*print(true === true);*/
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
