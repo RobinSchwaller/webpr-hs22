@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Function Tests</title>
+</head>
+<body>
+    <script>
+
+        const str2chars = str  => [...str];            // convert a string to an array of chars
+        const isAlpha   = char => char.match(/[a-z]/); // char is in the alphabet
+
+        const print = a => document.writeln(a.toString());
+
+        const palindrome = string => {
+            const cleanString = str2chars(string.toLocaleLowerCase()).filter(isAlpha);
+            const reversedString = cleanString.reverse().join('');
+            return str2chars(string.toLocaleLowerCase()).filter(isAlpha).join('') === reversedString;
+        };
+
+        print(palindrome("Amore, Roma!"));
+        print(palindrome("Madam, I'm Adam!"));
+        print(palindrome("Never odd or even."));
+        print(palindrome("Amore"));
+
+
+
+        /*print(true === true);*/
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

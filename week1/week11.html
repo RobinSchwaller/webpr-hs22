@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Function Tests</title>
+</head>
+<body>
+    <script>
+
+        const DataFlowVariable = howto => {
+            let value = undefined;
+            return () => undefined === value
+                ? value = howto()
+                : value;
+        };
+
+        const print = a => document.writeln(a.toString());
+
+
+        const x = DataFlowVariable(() => y() * 2);
+        let y = DataFlowVariable(() => 1);
+
+        x();
+
+        y = DataFlowVariable(() => 2);
+        document.writeln(x());
+
+
+
+        /*print(true === true);*/
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
